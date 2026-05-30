@@ -1,0 +1,66 @@
+# Spring Boot Interview Prep Repository
+
+## Project Overview
+Spring Boot interview preparation repo — 77 Java files across 6 progressive levels covering 100 interview questions. Built with Spring Boot 3.3.5, Java 21, Gradle 8.10.2.
+
+## Tech Stack
+- Java 21, Spring Boot 3.3.5, Spring Framework 6.1.x
+- Spring MVC (servlet-based, NOT WebFlux)
+- Spring Data JPA + Hibernate 6.5.3
+- Spring Security 6.3.x with JWT (jjwt 0.12.6)
+- H2 (default) + PostgreSQL 16 (Docker)
+- Swagger/OpenAPI 3.0 (springdoc 2.6.0)
+- Spring AOP, Actuator, Cache, Validation
+- Resilience4j for circuit breaker patterns
+- Gradle 8.10.2 with wrapper
+
+## Project Structure
+```
+src/main/java/interview/
+  SpringBootInterviewApplication.java   — Main app entry point
+  SwaggerConfig.java                    — OpenAPI/Swagger config with JWT auth
+  level1_core/       — Core Spring (standalone main() demos): DI, IoC, beans, profiles, config
+  level2_web/        — Spring Web (REST endpoints): CRUD, validation, exception handling, filters
+  level3_data/       — Spring Data (REST + JPA): entities, repositories, N+1, transactions
+  level4_security/   — Spring Security (JWT): auth, authorization, CORS/CSRF
+  level5_advanced/   — Advanced (AOP + Actuator): aspects, custom endpoints, events, testing
+  level6_microservices/ — Microservices (conceptual): resilience, saga, tracing, messaging
+```
+
+## How to Run
+- `./gradlew bootRun` — starts app on port 8080, exposes all REST APIs (Levels 2-5)
+- `./gradlew -PmainClass=interview.level1_core.di.IoCAndDIDemo run` — run standalone Level 1/6 demos
+- `./gradlew bootRun --args='--spring.profiles.active=postgres'` — use PostgreSQL (needs `docker compose up -d`)
+- Swagger UI: http://localhost:8080/swagger-ui.html
+- H2 Console: http://localhost:8080/h2-console (JDBC URL: jdbc:h2:mem:interviewdb, user: sa, no password)
+
+## Database
+- 4 tables: users, products, orders, order_items
+- Same schema for H2 and PostgreSQL (Hibernate auto-creates)
+- Sample data auto-loaded on startup (3 users, 5 products, 2 orders)
+- DDL mode: create-drop (recreated every restart)
+
+## Authentication (Level 4)
+- JWT-based, stateless (no sessions)
+- Test users: admin/admin123 (ROLE_ADMIN + ROLE_USER), user/user123 (ROLE_USER)
+- Login: POST /api/auth/login → returns JWT token
+- Secured: /api/secure/** requires Authorization: Bearer <token>
+
+## Conventions
+- Each Java file covers 1-3 interview questions with detailed Javadoc comments
+- Package naming: interview.<level>.<topic>
+- REST controllers have @Tag annotations for Swagger grouping
+- Level 1 and 6 files have standalone main() methods
+- Levels 2-5 are live Spring components (auto-scanned)
+
+## Key Files
+- SecurityConfig.java (level2_web/filters/) — central security config with JWT filter chain
+- GlobalExceptionHandler.java — @RestControllerAdvice with ProblemDetail (RFC 7807)
+- LoggingAspect.java — AOP demo (visible in console logs)
+- CustomHealthIndicator.java — custom /actuator/health component
+- docker-compose.yml — PostgreSQL 16 container
+
+## When adding new files
+- Follow existing patterns: Javadoc with Q&A, runnable code, curl examples in comments
+- Add @Tag annotation for Swagger grouping on new controllers
+- Permit new public endpoints in SecurityConfig.java

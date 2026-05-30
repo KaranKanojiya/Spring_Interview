@@ -1,0 +1,16 @@
+# Build artifacts
+build/
+.gradle/
+out/
+target/
+bin/
+
+# IDE
+.idea/
+*.iml
+
+# Gradle wrapper jar (binary)
+gradle/wrapper/gradle-wrapper.jar
+
+# OS
+.DS_Store

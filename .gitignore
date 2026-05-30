@@ -1,0 +1,35 @@
+# Build
+build/
+.gradle/
+out/
+target/
+bin/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# Compiled
+*.class
+*.jar
+*.war
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.env.local
+
+# Logs
+*.log
+logs/
+
+# H2 database files (if file-based)
+*.db
+*.mv.db
+*.trace.db
